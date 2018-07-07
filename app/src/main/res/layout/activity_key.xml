@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/frontback"
+    tools:context=".Key">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/txt_typing_password"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/edittextstyle"
+            android:ems="10"
+
+            android:hint="Enter Key"
+            android:inputType="textPersonName"
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            tools:layout_editor_absoluteX="97dp"
+            tools:layout_editor_absoluteY="126dp" />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="password_submit"
+            android:text="Open"
+            tools:layout_editor_absoluteX="163dp"
+            tools:layout_editor_absoluteY="261dp" />
+
+        <TextView
+            android:id="@+id/txt_password"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/edittextstyle"
+            android:text=""
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            tools:layout_editor_absoluteX="163dp"
+            tools:layout_editor_absoluteY="425dp"
+
+            />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
