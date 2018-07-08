@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,46 +8,63 @@
     tools:context=".Key">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="85dp"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="85dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/txt_typing_password"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/edittextstyle"
-            android:ems="10"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent">
 
-            android:hint="Enter Key"
-            android:inputType="textPersonName"
-            android:textColor="#fff"
-            android:textColorHint="#fff"
-            tools:layout_editor_absoluteX="97dp"
-            tools:layout_editor_absoluteY="126dp" />
+            <EditText
+                android:id="@+id/txt_typing_password"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/edittextstyle"
+                android:ems="10"
 
-        <Button
-            android:id="@+id/btn_submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="password_submit"
-            android:text="Open"
-            tools:layout_editor_absoluteX="163dp"
-            tools:layout_editor_absoluteY="261dp" />
+                android:hint="Enter Password"
+                android:inputType="textPersonName"
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                tools:layout_editor_absoluteX="97dp"
+                tools:layout_editor_absoluteY="126dp" />
 
-        <TextView
-            android:id="@+id/txt_password"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@drawable/edittextstyle"
-            android:text=""
-            android:textColor="#fff"
-            android:textColorHint="#fff"
-            tools:layout_editor_absoluteX="163dp"
-            tools:layout_editor_absoluteY="425dp"
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="password_submit"
+                android:text="Check"
+                tools:layout_editor_absoluteX="163dp"
+                tools:layout_editor_absoluteY="261dp" />
 
-            />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txt_password"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/edittextstyle"
+                android:text=""
+                android:textColor="#fff"
+                android:textColorHint="#fff"
+                tools:layout_editor_absoluteX="163dp"
+                tools:layout_editor_absoluteY="425dp"
+
+                />
+
+        </LinearLayout>
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
