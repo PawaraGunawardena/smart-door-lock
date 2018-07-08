@@ -1,5 +1,6 @@
 package com.crystall.smartlockprototype;
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Key extends AppCompatActivity {
 
@@ -18,6 +20,10 @@ public class Key extends AppCompatActivity {
     private boolean accept  = false;
     public String TAG = "MEEEET";
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,19 +36,38 @@ public class Key extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param v
+     * @return
+     */
+    @SuppressLint("SetTextI18n")
     public boolean password_submit(View v){
         try {
             password = editText_password.getText().toString();
-            if (password.equals("passed")) {
-                accept = true;
-                textView.setText("Verified User");
-                return accept;
+
+            /*
+             * DB can be accessed here.
+             * if db query matches, then success - else failure.
+             * NodeMCU Documentation - https://nodemcu.readthedocs.io/en/master/en/modules/sqlite3/
+             */
+
+            if(password.length() > 0) {
+                if (password.toLowerCase().equals(getApplication().getString(R.string.pass))) {
+                    accept = true;
+                    textView.setText(R.string.success);
+                    return accept;
+                } else {
+                    accept = false;
+                    textView.setText(R.string.failure);
+                    return accept;
+                }
             } else {
-                accept = false;
-                textView.setText("Access Denied");
-                return accept;
+                Toast.makeText(getApplicationContext(), "Please enter some text!" ,
+                        Toast.LENGTH_SHORT).show();
             }
-        }catch(Exception e){
+
+        } catch(Exception e){
             Log.i(TAG, "Message: "+e.getMessage());
         }
         return accept;
