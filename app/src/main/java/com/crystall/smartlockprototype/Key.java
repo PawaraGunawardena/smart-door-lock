@@ -1,6 +1,7 @@
 package com.crystall.smartlockprototype;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,12 +54,17 @@ public class Key extends AppCompatActivity {
              */
 
             if(password.length() > 0) {
-                if (password.toLowerCase().equals(getApplication().getString(R.string.pass))) {
+                if (password.toLowerCase().equals(getApplicationContext().getString(R.string.pass))) {
                     accept = true;
+                    Toast.makeText(getApplicationContext(), "Successfull Authentication!",
+                            Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Key.this, LoggedInActivity.class));
                     textView.setText(R.string.success);
                     return accept;
                 } else {
                     accept = false;
+                    Toast.makeText(getApplicationContext(), "Successfull Authentication!",
+                            Toast.LENGTH_LONG).show();
                     textView.setText(R.string.failure);
                     return accept;
                 }
