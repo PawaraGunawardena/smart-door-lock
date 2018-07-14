@@ -11,6 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crystall.smartlockprototype.authutil.firebase.AuthenticationUtility;
+import com.crystall.smartlockprototype.beans.firebase.User;
+import com.google.firebase.database.DatabaseReference;
+
+import java.sql.Timestamp;
+
 public class Key extends AppCompatActivity {
 
     private String password;
@@ -20,6 +26,7 @@ public class Key extends AppCompatActivity {
     private TextView textView;
     private boolean accept  = false;
     public String TAG = "MEEEET";
+    private AuthenticationUtility authenticationUtility;
 
     /**
      *
@@ -34,6 +41,18 @@ public class Key extends AppCompatActivity {
         editText_password = (EditText) findViewById(R.id.txt_typing_password);
         btn_submit = (Button)findViewById(R.id.btn_submit);
         textView = (TextView)findViewById(R.id.txt_password);
+
+        try {
+            authenticationUtility = new AuthenticationUtility();
+        } catch (Exception e) {
+            System.out.println("EXCEPTION OCCURRED!");
+        }
+
+        authenticationUtility.write(
+                new User("dasunpubudumal",
+                        "password",
+                        Timestamp.valueOf("2005-04-06 09:01:10"),
+                        Timestamp.valueOf("2005-04-08 09:01:10")));
 
     }
 

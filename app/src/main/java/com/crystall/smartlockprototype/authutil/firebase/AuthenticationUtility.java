@@ -1,14 +1,26 @@
 package com.crystall.smartlockprototype.authutil.firebase;
 
-import com.crystall.smartlockprototype.authutil.IAuthenticationUtililty;
+import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.crystall.smartlockprototype.authutil.IAuthenticationUtililty;
 import com.crystall.smartlockprototype.beans.firebase.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class AuthenticationUtility implements IAuthenticationUtililty {
 
     private DatabaseReference databaseReference;
+
+    public AuthenticationUtility() {
+        initialize();
+    }
 
     /**
      * Initializes the db connection
@@ -16,7 +28,19 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
      */
     @Override
     public DatabaseReference initialize() {
-        return FirebaseDatabase.getInstance().getReference();
+
+        this.databaseReference = FirebaseDatabase
+                .getInstance("https://smart-door-lock-95e14.firebaseio.com")
+                .getReference();
+
+        if(this.databaseReference.getDatabase() == null) {
+            return null;
+        } else {
+            Log.i("CONNECTION", "Firebase Connection Successfully Initialized.");
+        }
+
+        return databaseReference;
+
     }
 
     /**
@@ -26,8 +50,29 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
      */
     @Override
     public int write(User user) {
-        getDatabaseReference().child("users").child(user.getUsername()).setValue(user);
-        return 0;
+
+        int result = 0;
+
+        Task<Void> users = getDatabaseReference().child("users").child(user.getUsername())
+                .setValue(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.i("SUCCESS", "Successful Data Write");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("FAILURE", "Failure Data Write");
+                    }
+                });
+
+        if(users.isSuccessful()) {
+            result = 1;
+        }
+
+        return result;
     }
 
     /**
@@ -37,6 +82,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
      */
     @Override
     public User read(User user) {
+        // TODO: Implement the Read operation.
         return null;
     }
 
