@@ -57,4 +57,14 @@ public class User implements IUser {
     public void setOut(Timestamp out) {
         this.out = out;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", in=" + in +
+                ", out=" + out +
+                '}';
+    }
 }

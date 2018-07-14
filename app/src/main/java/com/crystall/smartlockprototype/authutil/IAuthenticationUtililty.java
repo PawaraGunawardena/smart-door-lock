@@ -20,10 +20,10 @@ public interface IAuthenticationUtililty {
 
     /**
      * Read from the database.
-     * @param user
+     * @param username
      * @return User
      */
-    User read(User user);
+    User read(String username);
 
     /**
      * Updates user

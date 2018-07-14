@@ -48,11 +48,6 @@ public class Key extends AppCompatActivity {
             System.out.println("EXCEPTION OCCURRED!");
         }
 
-        authenticationUtility.write(
-                new User("dasunpubudumal",
-                        "password",
-                        Timestamp.valueOf("2005-04-06 09:01:10"),
-                        Timestamp.valueOf("2005-04-08 09:01:10")));
 
     }
 

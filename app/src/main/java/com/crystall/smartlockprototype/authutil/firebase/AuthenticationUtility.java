@@ -77,13 +77,32 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * Read from the database.
-     * @param user
+     * @param username
      * @return User
      */
     @Override
-    public User read(User user) {
-        // TODO: Implement the Read operation.
-        return null;
+    public User read(String username) {
+
+        final User[] user = {null};
+
+       getDatabaseReference().child("users").child(username).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User retrievedUser = dataSnapshot.getValue(User.class);
+                if (retrievedUser == null) {
+                    return;
+                }
+                user[0] = retrievedUser;
+                Log.i("RETRIEVED_USER", retrievedUser.toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("FAILED_TO_RETRIEVE_USER", "User Retrieval Failed.");
+            }
+        });
+
+        return user[0];
     }
 
     /**
