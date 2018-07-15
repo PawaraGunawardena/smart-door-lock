@@ -9,6 +9,7 @@ import com.crystall.smartlockprototype.config.Config;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -90,7 +91,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
         final User[] user = {null};
 
-        getDatabaseReference().child("users").child(username).addValueEventListener(new ValueEventListener() {
+        getDatabaseReference().child("users").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User retrievedUser = dataSnapshot.getValue(User.class);
@@ -105,6 +106,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("FAILED_TO_RETRIEVE_USER", "User Retrieval Failed.");
             }
+
         });
 
         return user[0];
@@ -152,7 +154,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
      * Gets the database reference to the context of this class.
      * @return DatabaseReference
      */
-    private DatabaseReference getDatabaseReference() {
+    public DatabaseReference getDatabaseReference() {
         return databaseReference;
     }
 }

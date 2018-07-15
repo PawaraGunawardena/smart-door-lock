@@ -13,9 +13,15 @@ import android.widget.Toast;
 
 import com.crystall.smartlockprototype.authutil.firebase.AuthenticationUtility;
 import com.crystall.smartlockprototype.beans.firebase.User;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
+import java.net.URI;
 import java.sql.Timestamp;
+import java.util.Map;
 
 public class Key extends AppCompatActivity {
 
@@ -47,11 +53,6 @@ public class Key extends AppCompatActivity {
         } catch (Exception e) {
             System.out.println("EXCEPTION OCCURRED!");
         }
-
-        User user = new User("TEST_USERNAME", "TEST_PASSWORD",
-                Timestamp.valueOf("2005-10-10 10:10:10"),
-                Timestamp.valueOf("2005-10-11 12:12:12"));
-
     }
 
     /**

@@ -32,24 +32,24 @@ public interface IUser {
      * Getter
      * @return in
      */
-    Timestamp getIn();
+    String getIn();
 
     /**
      * Setter
      * @param in
      */
-    void setIn(Timestamp in);
+    void setIn(String in);
 
     /**
      * Getter
      * @return out
      */
-    Timestamp getOut();
+    String getOut();
 
     /**
      * Setter
      * @param out
      */
-    void setOut(Timestamp out);
+    void setOut(String out);
 
 }

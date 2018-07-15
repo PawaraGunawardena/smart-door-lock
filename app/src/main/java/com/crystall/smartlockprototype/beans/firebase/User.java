@@ -2,21 +2,21 @@ package com.crystall.smartlockprototype.beans.firebase;
 
 import com.crystall.smartlockprototype.beans.IUser;
 
-import java.sql.Timestamp;
-
 public class User implements IUser {
 
     private String username;
     private String password;
-    private Timestamp in;
-    private Timestamp out;
+    private String in;
+    private String out;
 
-    public User(String username, String password, Timestamp in, Timestamp out) {
+    public User(String username, String password, String in, String out) {
         this.username = username;
         this.password = password;
         this.in = in;
         this.out = out;
     }
+
+    public User(){}
 
     @Override
     public String getUsername() {
@@ -39,22 +39,22 @@ public class User implements IUser {
     }
 
     @Override
-    public Timestamp getIn() {
+    public String getIn() {
         return in;
     }
 
     @Override
-    public void setIn(Timestamp in) {
+    public void setIn(String in) {
         this.in = in;
     }
 
     @Override
-    public Timestamp getOut() {
+    public String getOut() {
         return out;
     }
 
     @Override
-    public void setOut(Timestamp out) {
+    public void setOut(String out) {
         this.out = out;
     }
 

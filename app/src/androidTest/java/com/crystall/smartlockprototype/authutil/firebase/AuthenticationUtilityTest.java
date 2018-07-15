@@ -1,6 +1,7 @@
 package com.crystall.smartlockprototype.authutil.firebase;
 
 import com.crystall.smartlockprototype.beans.firebase.User;
+import com.crystall.smartlockprototype.config.Config;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.junit.Test;
@@ -19,19 +20,8 @@ public class AuthenticationUtilityTest {
     @Test
     public void testInitialize() {
         assertThat(authenticationUtility.initialize(), is(FirebaseDatabase
-                .getInstance("https://smart-door-lock-95e14.firebaseio.com")
+                .getInstance(Config.FIREBASE_URL)
                 .getReference()));
     }
-
-
-    @Test
-    public void testWrite() {
-        User user = new User("TEST_USERNAME", "TEST_PASSWORD",
-                Timestamp.valueOf("2005-10-10 10:10:10"),
-                Timestamp.valueOf("2005-10-11 12:12:12"));
-        assertThat(authenticationUtility.write(user), is(1));
-    }
-
-
-
+    
 }
