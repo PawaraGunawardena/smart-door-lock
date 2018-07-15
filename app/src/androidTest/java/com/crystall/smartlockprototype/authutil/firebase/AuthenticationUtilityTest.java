@@ -23,5 +23,5 @@ public class AuthenticationUtilityTest {
                 .getInstance(Config.FIREBASE_URL)
                 .getReference()));
     }
-    
+
 }

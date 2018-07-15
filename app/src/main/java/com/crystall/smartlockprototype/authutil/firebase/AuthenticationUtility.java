@@ -91,7 +91,8 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
         final User[] user = {null};
 
-        getDatabaseReference().child("users").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+        getDatabaseReference().child("users").child(username)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User retrievedUser = dataSnapshot.getValue(User.class);

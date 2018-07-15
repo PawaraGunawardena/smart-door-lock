@@ -1,7 +1,5 @@
 package com.crystall.smartlockprototype.beans;
 
-import java.sql.Timestamp;
-
 public interface IUser {
 
     /**

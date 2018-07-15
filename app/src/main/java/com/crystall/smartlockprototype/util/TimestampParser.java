@@ -15,12 +15,12 @@ public class TimestampParser implements ITimestampParser{
      * @return map with date and time.
      */
     @Override
-    public Map<String, String> parse(String timestamp) {
+    public ParsedDate parse(String timestamp) {
         String[] splitted = timestamp.split("\\\\s+");
-        Map<String, String > map = new HashMap<>();
-        map.put("date", splitted[0]);
-        map.put("time", splitted[1]);
-        return map;
+        ParsedDate parsedDate = new ParsedDate();
+        parsedDate.setDate(splitted[0]);
+        parsedDate.setTime(splitted[1]);
+        return parsedDate;
     }
 
     /**

@@ -1,8 +1,5 @@
 package com.crystall.smartlockprototype.util;
 
-import java.util.Date;
-import java.util.Map;
-
 public interface ITimestampParser {
 
     /**
@@ -10,7 +7,7 @@ public interface ITimestampParser {
      * @param timestamp
      * @return map with date and time.
      */
-    Map<String, String> parse(String timestamp);
+   ParsedDate parse(String timestamp);
 
     /**
      * Gets the current timestamp
