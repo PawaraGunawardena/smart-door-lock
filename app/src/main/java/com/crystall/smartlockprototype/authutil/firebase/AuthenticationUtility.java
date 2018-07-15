@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 public class AuthenticationUtility implements IAuthenticationUtililty {
 
     private DatabaseReference databaseReference;
+    private PasswordUtility passwordUtility;
 
     public AuthenticationUtility() {
         initialize();
@@ -53,6 +54,9 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
         int result = 0;
 
+        // Hash the password and store
+        user.setPassword(passwordUtility.hash(user.getPassword()));
+
         Task<Void> users = getDatabaseReference().child("users").child(user.getUsername())
                 .setValue(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -85,7 +89,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
         final User[] user = {null};
 
-       getDatabaseReference().child("users").child(username).addValueEventListener(new ValueEventListener() {
+        getDatabaseReference().child("users").child(username).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User retrievedUser = dataSnapshot.getValue(User.class);
@@ -123,6 +127,24 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
     @Override
     public int delete(String name) {
         return 0;
+    }
+
+    /**
+     * Login utility.
+     * @param name
+     * @return true if the password is valid.
+     */
+    @Override
+    public boolean login(String name, String password) {
+        User user = read(name);
+        boolean result = false;
+
+        if(user != null) {
+            result = passwordUtility.dehashAndCheck(password, user.getPassword());
+        }
+
+        return result;
+
     }
 
     /**

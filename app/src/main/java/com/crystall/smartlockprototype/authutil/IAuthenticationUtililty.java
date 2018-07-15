@@ -39,4 +39,7 @@ public interface IAuthenticationUtililty {
      */
     int delete(String name);
 
+
+    boolean login(String name, String password);
+
 }
