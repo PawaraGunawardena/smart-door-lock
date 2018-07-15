@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "30134507193",
+    "firebase_url": "https://smart-door-lock-95e14.firebaseio.com",
+    "project_id": "smart-door-lock-95e14",
+    "storage_bucket": "smart-door-lock-95e14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30134507193:android:d4931079f8286f94",
+        "android_client_info": {
+          "package_name": "com.crystall.smartlockprototype"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30134507193-gp636ujj37uq1kiu89s3m1v43qtis8n1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crystall.smartlockprototype",
+            "certificate_hash": "269137f703090eb4cb666e8a3d941e94f00d010e"
+          }
+        },
+        {
+          "client_id": "30134507193-jaq4qjv8o9ueoshsmq4cehtdjao7t8s3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8U4l_a9CNfnlcSC_z7kjny3pR8-SAE6c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30134507193-jaq4qjv8o9ueoshsmq4cehtdjao7t8s3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
