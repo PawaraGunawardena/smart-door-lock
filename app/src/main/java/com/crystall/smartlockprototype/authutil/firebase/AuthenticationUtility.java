@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.crystall.smartlockprototype.authutil.IAuthenticationUtililty;
 import com.crystall.smartlockprototype.beans.firebase.User;
+import com.crystall.smartlockprototype.config.Config;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -17,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 public class AuthenticationUtility implements IAuthenticationUtililty {
 
     private DatabaseReference databaseReference;
-    private PasswordUtility passwordUtility;
+    private final PasswordUtility passwordUtility = new PasswordUtility();
 
     public AuthenticationUtility() {
         initialize();
@@ -31,7 +32,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
     public DatabaseReference initialize() {
 
         this.databaseReference = FirebaseDatabase
-                .getInstance("https://smart-door-lock-95e14.firebaseio.com")
+                .getInstance(Config.FIREBASE_URL)
                 .getReference();
 
         if(this.databaseReference.getDatabase() == null) {

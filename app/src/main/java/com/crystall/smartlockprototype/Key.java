@@ -48,6 +48,9 @@ public class Key extends AppCompatActivity {
             System.out.println("EXCEPTION OCCURRED!");
         }
 
+        User user = new User("TEST_USERNAME", "TEST_PASSWORD",
+                Timestamp.valueOf("2005-10-10 10:10:10"),
+                Timestamp.valueOf("2005-10-11 12:12:12"));
 
     }
 
