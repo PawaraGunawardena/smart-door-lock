@@ -5,7 +5,7 @@ public interface ITimestampParser {
     /**
      * Parses the timestamp value.
      * @param timestamp
-     * @return map with date and time.
+     * @return a ParsedDate bean.
      */
    ParsedDate parse(String timestamp);
 

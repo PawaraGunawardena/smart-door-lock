@@ -1,5 +1,6 @@
 package com.crystall.smartlockprototype.authutil;
 
+import com.crystall.smartlockprototype.authutil.firebase.FirebaseCallback;
 import com.crystall.smartlockprototype.beans.firebase.User;
 import com.google.firebase.database.DatabaseReference;
 
@@ -23,7 +24,7 @@ public interface IAuthenticationUtililty {
      * @param username
      * @return User
      */
-    User read(String username);
+    User read(String username, FirebaseCallback callback);
 
     /**
      * Updates user

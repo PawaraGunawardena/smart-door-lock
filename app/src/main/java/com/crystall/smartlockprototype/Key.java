@@ -25,13 +25,10 @@ import java.util.Map;
 
 public class Key extends AppCompatActivity {
 
-    private String password;
-    private EditText editText_password;
-    private Button btn_submit;
-    private String txt_password;
-    private TextView textView;
+    private EditText username;
+    private EditText password;
+    private Button submit;
     private boolean accept  = false;
-    public String TAG = "MEEEET";
     private AuthenticationUtility authenticationUtility;
 
     /**
@@ -44,9 +41,15 @@ public class Key extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key);
 
-        editText_password = (EditText) findViewById(R.id.txt_typing_password);
-        btn_submit = (Button)findViewById(R.id.btn_submit);
-        textView = (TextView)findViewById(R.id.txt_password);
+        username = findViewById(R.id.txtUsername);
+        password = findViewById(R.id.txtPassword);
+        submit = findViewById(R.id.btnLogIn);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                password_submit(v);
+            }
+        });
 
         try {
             authenticationUtility = new AuthenticationUtility();
@@ -61,9 +64,8 @@ public class Key extends AppCompatActivity {
      * @return
      */
     @SuppressLint("SetTextI18n")
-    public boolean password_submit(View v){
+    public void password_submit(View v){
         try {
-            password = editText_password.getText().toString();
 
             /*
              * DB can be accessed here.
@@ -71,30 +73,23 @@ public class Key extends AppCompatActivity {
              * NodeMCU Documentation - https://nodemcu.readthedocs.io/en/master/en/modules/sqlite3/
              */
 
-            if(password.length() > 0) {
-                if (password.toLowerCase().equals(getApplicationContext().getString(R.string.pass))) {
-                    accept = true;
-                    Toast.makeText(getApplicationContext(), "Successfull Authentication!",
-                            Toast.LENGTH_LONG).show();
+            System.out.println(authenticationUtility.login(username.getText().toString(), password.getText().toString()));
+
+            if(password.length() > 0 && username.length() > 0) {
+                if( authenticationUtility.login(username.getText().toString(), password.getText().toString())) {
                     startActivity(new Intent(Key.this, LoggedInActivity.class));
-                    textView.setText(R.string.success);
-                    return accept;
                 } else {
-                    accept = false;
-                    Toast.makeText(getApplicationContext(), "Successfull Authentication!",
+                    Toast.makeText(getApplicationContext(), "Please enter correct credentials!" ,
                             Toast.LENGTH_LONG).show();
-                    textView.setText(R.string.failure);
-                    return accept;
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Please enter some text!" ,
+                Toast.makeText(getApplicationContext(), "Please enter proper credentials!" ,
                         Toast.LENGTH_SHORT).show();
             }
 
         } catch(Exception e){
-            Log.i(TAG, "Message: "+e.getMessage());
+            Log.e("ERROR", "Message: "+ e.getMessage());
         }
-        return accept;
     }
 
 
