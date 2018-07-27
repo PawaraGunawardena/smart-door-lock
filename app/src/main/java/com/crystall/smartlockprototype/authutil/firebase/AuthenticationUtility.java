@@ -15,6 +15,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+
 public class AuthenticationUtility implements IAuthenticationUtililty {
 
     private DatabaseReference databaseReference;
@@ -48,11 +52,13 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * Read from the database.
+     * TODO: Implement this method or read(String username) method.
+     * USing a callback for async datastream.
      * @param username
      * @return User
      */
     @Override
-    public User read(String username, final FirebaseCallback callback) {
+    public void read(String username, final FirebaseCallback callback) {
 
         getDatabaseReference().child("users").child(username)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -62,20 +68,25 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
                         if (retrievedUser == null) {
                             return;
                         }
-
                         callback.onCallback(retrievedUser);
-
                         Log.i("RETRIEVED_USER", retrievedUser.toString());
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("FAILED_TO_RETRIEVE_USER", "User Retrieval Failed.");
                     }
-
                 });
+    }
 
-        return retrievedUser;
+    /**
+     * Read from the database.
+     * Use of final variable scope.
+     * TODO: Implement this.
+     * @param username
+     */
+    @Override
+    public void read(String username) {
+
     }
 
     /**
@@ -139,7 +150,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
      * @return true if the password is valid.
      */
     @Override
-    public boolean login(String name, final String password) {
+    public boolean login(final String name, final String password) {
 
         final boolean[] result = new boolean[1];
 
@@ -155,6 +166,8 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
         return result[0];
 
     }
+
+
 
     private User getRetrievedUser() {
         return retrievedUser;

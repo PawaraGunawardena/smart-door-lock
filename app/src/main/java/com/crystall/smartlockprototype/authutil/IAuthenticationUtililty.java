@@ -24,7 +24,9 @@ public interface IAuthenticationUtililty {
      * @param username
      * @return User
      */
-    User read(String username, FirebaseCallback callback);
+    void read(String username, FirebaseCallback callback);
+
+    void read(String username);
 
     /**
      * Updates user
