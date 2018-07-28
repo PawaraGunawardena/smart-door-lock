@@ -1,14 +1,21 @@
 package com.crystall.smartlockprototype.authutil.firebase;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.crystall.smartlockprototype.Key;
+import com.crystall.smartlockprototype.LoggedInActivity;
 import com.crystall.smartlockprototype.authutil.IAuthenticationUtililty;
 import com.crystall.smartlockprototype.beans.firebase.User;
 import com.crystall.smartlockprototype.config.Config;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,14 +26,18 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import static android.support.v4.content.ContextCompat.startActivity;
+
 public class AuthenticationUtility implements IAuthenticationUtililty {
 
     private DatabaseReference databaseReference;
     private final PasswordUtility passwordUtility = new PasswordUtility();
     private User retrievedUser;
+    private boolean loginResult;
 
     public AuthenticationUtility() {
         initialize();
+        loginResult = false;
     }
 
     /**
@@ -85,8 +96,23 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
      * @param username
      */
     @Override
-    public void read(String username) {
+    public User read(String username) {
 
+        final User[] user = {null};
+
+        getDatabaseReference().child("users").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                user[0] = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return user[0];
     }
 
     /**
@@ -150,7 +176,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
      * @return true if the password is valid.
      */
     @Override
-    public boolean login(final String name, final String password) {
+    public boolean login(final String name, final Context context, final String password) {
 
         final boolean[] result = new boolean[1];
 
@@ -160,10 +186,22 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
             @Override
             public void onCallback(User user) {
                 result[0] = passwordUtility.dehashAndCheck(password, user.getPassword());
+                setLoginResult(result[0]);
+                if(result[0]) {
+                    Intent[] i = {new Intent(context, LoggedInActivity.class)};
+                    i[0].setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivities(i);
+                } else {
+                    Toast.makeText(context, "Please enter proper credentials!" ,
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        return result[0];
+        // This becomes false. That is the problem.
+        System.out.println("OUTSIDE RESULT " + loginResult);
+
+        return loginResult;
 
     }
 
@@ -185,4 +223,11 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
         return databaseReference;
     }
 
+    private boolean isLoginResult() {
+        return loginResult;
+    }
+
+    private void setLoginResult(boolean loginResult) {
+        this.loginResult = loginResult;
+    }
 }

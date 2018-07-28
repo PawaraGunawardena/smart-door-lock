@@ -56,6 +56,8 @@ public class Key extends AppCompatActivity {
         } catch (Exception e) {
             System.out.println("EXCEPTION OCCURRED!");
         }
+
+//        authenticationUtility.write(new User("dasun", "dasun", "2018-08-08 10:10:10", "2018-08-09 10:10:11"));
     }
 
     /**
@@ -73,15 +75,11 @@ public class Key extends AppCompatActivity {
              * NodeMCU Documentation - https://nodemcu.readthedocs.io/en/master/en/modules/sqlite3/
              */
 
-            System.out.println(authenticationUtility.login(username.getText().toString(), password.getText().toString()));
-
             if(password.length() > 0 && username.length() > 0) {
-                if( authenticationUtility.login(username.getText().toString(), password.getText().toString())) {
-                    startActivity(new Intent(Key.this, LoggedInActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(), "Please enter correct credentials!" ,
-                            Toast.LENGTH_LONG).show();
-                }
+                authenticationUtility.login(username.getText().toString(),
+                        getApplicationContext(),
+                        password.getText().toString()
+                );
             } else {
                 Toast.makeText(getApplicationContext(), "Please enter proper credentials!" ,
                         Toast.LENGTH_SHORT).show();

@@ -1,5 +1,7 @@
 package com.crystall.smartlockprototype.authutil;
 
+import android.content.Context;
+
 import com.crystall.smartlockprototype.authutil.firebase.FirebaseCallback;
 import com.crystall.smartlockprototype.beans.firebase.User;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +28,7 @@ public interface IAuthenticationUtililty {
      */
     void read(String username, FirebaseCallback callback);
 
-    void read(String username);
+    User read(String username);
 
     /**
      * Updates user
@@ -43,6 +45,6 @@ public interface IAuthenticationUtililty {
     int delete(String name);
 
 
-    boolean login(String name, String password);
+    boolean login(String name, Context context, String password);
 
 }
