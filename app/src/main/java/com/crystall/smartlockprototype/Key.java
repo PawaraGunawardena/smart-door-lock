@@ -11,15 +11,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crystall.smartlockprototype.authutil.firebase.AuthenticationUtility;
+import com.crystall.smartlockprototype.beans.firebase.User;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.net.URI;
+import java.sql.Timestamp;
+import java.util.Map;
+
 public class Key extends AppCompatActivity {
 
-    private String password;
-    private EditText editText_password;
-    private Button btn_submit;
-    private String txt_password;
-    private TextView textView;
+    private EditText username;
+    private EditText password;
+    private Button submit;
     private boolean accept  = false;
-    public String TAG = "MEEEET";
+    private AuthenticationUtility authenticationUtility;
 
     /**
      *
@@ -31,10 +41,23 @@ public class Key extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key);
 
-        editText_password = (EditText) findViewById(R.id.txt_typing_password);
-        btn_submit = (Button)findViewById(R.id.btn_submit);
-        textView = (TextView)findViewById(R.id.txt_password);
+        username = findViewById(R.id.txtUsername);
+        password = findViewById(R.id.txtPassword);
+        submit = findViewById(R.id.btnLogIn);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                password_submit(v);
+            }
+        });
 
+        try {
+            authenticationUtility = new AuthenticationUtility();
+        } catch (Exception e) {
+            System.out.println("EXCEPTION OCCURRED!");
+        }
+
+//        authenticationUtility.write(new User("dasun", "dasun", "2018-08-08 10:10:10", "2018-08-09 10:10:11"));
     }
 
     /**
@@ -43,40 +66,21 @@ public class Key extends AppCompatActivity {
      * @return
      */
     @SuppressLint("SetTextI18n")
-    public boolean password_submit(View v){
+    public void password_submit(View v){
         try {
-            password = editText_password.getText().toString();
-
-            /*
-             * DB can be accessed here.
-             * if db query matches, then success - else failure.
-             * NodeMCU Documentation - https://nodemcu.readthedocs.io/en/master/en/modules/sqlite3/
-             */
-
-            if(password.length() > 0) {
-                if (password.toLowerCase().equals(getApplicationContext().getString(R.string.pass))) {
-                    accept = true;
-                    Toast.makeText(getApplicationContext(), "Successfull Authentication!",
-                            Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(Key.this, LoggedInActivity.class));
-                    textView.setText(R.string.success);
-                    return accept;
-                } else {
-                    accept = false;
-                    Toast.makeText(getApplicationContext(), "Successfull Authentication!",
-                            Toast.LENGTH_LONG).show();
-                    textView.setText(R.string.failure);
-                    return accept;
-                }
+            if(password.length() > 0 && username.length() > 0) {
+                authenticationUtility.login(username.getText().toString(),
+                        getApplicationContext(),
+                        password.getText().toString()
+                );
             } else {
-                Toast.makeText(getApplicationContext(), "Please enter some text!" ,
+                Toast.makeText(getApplicationContext(), "Please enter proper credentials!" ,
                         Toast.LENGTH_SHORT).show();
             }
 
         } catch(Exception e){
-            Log.i(TAG, "Message: "+e.getMessage());
+            Log.e("ERROR", "Message: "+ e.getMessage());
         }
-        return accept;
     }
 
 
