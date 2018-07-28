@@ -147,19 +147,16 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
     @Override
     public void login(final String name, final Context context, final String password) {
         final boolean[] result = new boolean[1];
-        read(name, new FirebaseCallback() {
-            @Override
-            public void onCallback(User user) {
-                result[0] = passwordUtility.dehashAndCheck(password, user.getPassword());
-                if (result[0]) {
-                    Intent[] i = {new Intent(context, LoggedInActivity.class)};
-                    i[0].setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i[0].putExtra("USER", user);  // Send the user to the next intent.
-                    context.startActivities(i);
-                } else {
-                    Toast.makeText(context, "Please enter proper credentials!",
-                            Toast.LENGTH_SHORT).show();
-                }
+        read(name, (user) -> {
+            result[0] = passwordUtility.dehashAndCheck(password, user.getPassword());
+            if (result[0]) {
+                Intent[] i = {new Intent(context, LoggedInActivity.class)};
+                i[0].setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i[0].putExtra("USER", user);  // Send the user to the next intent.
+                context.startActivities(i);
+            } else {
+                Toast.makeText(context, "Please enter proper credentials!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
