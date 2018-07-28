@@ -2,6 +2,8 @@ package com.crystall.smartlockprototype.beans.firebase;
 
 import com.crystall.smartlockprototype.beans.IUser;
 
+import java.io.Serializable;
+
 public class User implements IUser {
 
     private String username;

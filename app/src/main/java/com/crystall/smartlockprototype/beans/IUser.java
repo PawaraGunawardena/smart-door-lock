@@ -1,6 +1,8 @@
 package com.crystall.smartlockprototype.beans;
 
-public interface IUser {
+import java.io.Serializable;
+
+public interface IUser extends Serializable{
 
     /**
      * Getter

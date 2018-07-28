@@ -1,5 +1,6 @@
 package com.crystall.smartlockprototype.authutil.firebase;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -90,32 +92,6 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
     }
 
     /**
-     * Read from the database.
-     * Use of final variable scope.
-     * TODO: Implement this.
-     * @param username
-     */
-    @Override
-    public User read(String username) {
-
-        final User[] user = {null};
-
-        getDatabaseReference().child("users").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                user[0] = dataSnapshot.getValue(User.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        return user[0];
-    }
-
-    /**
      * Writes to the database.
      * @param user
      * @return 0 -> failure 1 -> success.
@@ -180,16 +156,14 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
         final boolean[] result = new boolean[1];
 
-        // TODO: Correct the async behavior
-
         read(name, new FirebaseCallback() {
             @Override
             public void onCallback(User user) {
                 result[0] = passwordUtility.dehashAndCheck(password, user.getPassword());
-                setLoginResult(result[0]);
                 if(result[0]) {
                     Intent[] i = {new Intent(context, LoggedInActivity.class)};
                     i[0].setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i[0].putExtra("USER", user);  // Send the user to the next intent.
                     context.startActivities(i);
                 } else {
                     Toast.makeText(context, "Please enter proper credentials!" ,

@@ -28,8 +28,6 @@ public interface IAuthenticationUtililty {
      */
     void read(String username, FirebaseCallback callback);
 
-    User read(String username);
-
     /**
      * Updates user
      * @param user
