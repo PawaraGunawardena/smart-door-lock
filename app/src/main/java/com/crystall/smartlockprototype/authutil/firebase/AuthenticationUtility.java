@@ -1,14 +1,11 @@
 package com.crystall.smartlockprototype.authutil.firebase;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.crystall.smartlockprototype.Key;
 import com.crystall.smartlockprototype.LoggedInActivity;
 import com.crystall.smartlockprototype.authutil.IAuthenticationUtililty;
 import com.crystall.smartlockprototype.beans.firebase.User;
@@ -16,24 +13,16 @@ import com.crystall.smartlockprototype.config.Config;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-
-import static android.support.v4.content.ContextCompat.startActivity;
-
 public class AuthenticationUtility implements IAuthenticationUtililty {
 
-    private DatabaseReference databaseReference;
     private final PasswordUtility passwordUtility = new PasswordUtility();
+    private DatabaseReference databaseReference;
 
     public AuthenticationUtility() {
         initialize();
@@ -41,6 +30,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * Initializes the db connection
+     *
      * @return DatabaseReference instance.
      */
     @Override
@@ -50,7 +40,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
                 .getInstance(Config.FIREBASE_URL)
                 .getReference();
 
-        if(this.databaseReference.getDatabase() == null) {
+        if (this.databaseReference.getDatabase() == null) {
             return null;
         } else {
             Log.i("CONNECTION", "Firebase Connection Successfully Initialized.");
@@ -63,6 +53,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
     /**
      * Read from the database.
      * USing a callback for async datastream.
+     *
      * @param username
      * @return User
      */
@@ -80,6 +71,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
                         callback.onCallback(retrievedUser);
                         Log.i("RETRIEVED_USER", retrievedUser.toString());
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e("FAILED_TO_RETRIEVE_USER", "User Retrieval Failed.");
@@ -89,6 +81,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * Writes to the database.
+     *
      * @param user
      * @return 0 -> failure 1 -> success.
      */
@@ -115,7 +108,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
                     }
                 });
 
-        if(users.isSuccessful()) {
+        if (users.isSuccessful()) {
             result = 1;
         }
 
@@ -124,6 +117,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * Updates user
+     *
      * @param user
      * @return 0 -> failure 1 -> success.
      */
@@ -134,6 +128,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * Deletes a user.
+     *
      * @param name
      * @return 0 -> failure 1 -> success.
      */
@@ -144,6 +139,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * TODO: NodeMCU should be sent the signal here inside if(result[0]) block.
+     *
      * @param name
      * @param context
      * @param password
@@ -155,13 +151,13 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
             @Override
             public void onCallback(User user) {
                 result[0] = passwordUtility.dehashAndCheck(password, user.getPassword());
-                if(result[0]) {
+                if (result[0]) {
                     Intent[] i = {new Intent(context, LoggedInActivity.class)};
                     i[0].setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i[0].putExtra("USER", user);  // Send the user to the next intent.
                     context.startActivities(i);
                 } else {
-                    Toast.makeText(context, "Please enter proper credentials!" ,
+                    Toast.makeText(context, "Please enter proper credentials!",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -170,6 +166,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * Gets the database reference to the context of this class.
+     *
      * @return DatabaseReference
      */
     private DatabaseReference getDatabaseReference() {

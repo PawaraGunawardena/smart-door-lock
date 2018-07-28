@@ -3,6 +3,8 @@ package com.crystall.smartlockprototype.beans.firebase;
 import com.crystall.smartlockprototype.beans.IUser;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User implements IUser {
 
@@ -10,6 +12,7 @@ public class User implements IUser {
     private String password;
     private String in;
     private String out;
+    private HashMap<Integer, String> doors;
 
     public User(String username, String password, String in, String out) {
         this.username = username;
@@ -58,6 +61,14 @@ public class User implements IUser {
     @Override
     public void setOut(String out) {
         this.out = out;
+    }
+
+    public HashMap<Integer, String> getDoors() {
+        return doors;
+    }
+
+    public void setDoors(HashMap<Integer, String> doors) {
+        this.doors = doors;
     }
 
     @Override
