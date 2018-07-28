@@ -34,12 +34,9 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     private DatabaseReference databaseReference;
     private final PasswordUtility passwordUtility = new PasswordUtility();
-    private User retrievedUser;
-    private boolean loginResult;
 
     public AuthenticationUtility() {
         initialize();
-        loginResult = false;
     }
 
     /**
@@ -152,10 +149,8 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
      * @return true if the password is valid.
      */
     @Override
-    public boolean login(final String name, final Context context, final String password) {
-
+    public void login(final String name, final Context context, final String password) {
         final boolean[] result = new boolean[1];
-
         read(name, new FirebaseCallback() {
             @Override
             public void onCallback(User user) {
@@ -171,22 +166,6 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
                 }
             }
         });
-
-        // This becomes false. That is the problem.
-        System.out.println("OUTSIDE RESULT " + loginResult);
-
-        return loginResult;
-
-    }
-
-
-
-    private User getRetrievedUser() {
-        return retrievedUser;
-    }
-
-    private void setRetrievedUser(User retrievedUser) {
-        this.retrievedUser = retrievedUser;
     }
 
     /**
@@ -195,13 +174,5 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
      */
     private DatabaseReference getDatabaseReference() {
         return databaseReference;
-    }
-
-    private boolean isLoginResult() {
-        return loginResult;
-    }
-
-    private void setLoginResult(boolean loginResult) {
-        this.loginResult = loginResult;
     }
 }

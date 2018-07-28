@@ -43,6 +43,6 @@ public interface IAuthenticationUtililty {
     int delete(String name);
 
 
-    boolean login(String name, Context context, String password);
+    void login(String name, Context context, String password);
 
 }
