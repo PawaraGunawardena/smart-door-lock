@@ -68,13 +68,6 @@ public class Key extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void password_submit(View v){
         try {
-
-            /*
-             * DB can be accessed here.
-             * if db query matches, then success - else failure.
-             * NodeMCU Documentation - https://nodemcu.readthedocs.io/en/master/en/modules/sqlite3/
-             */
-
             if(password.length() > 0 && username.length() > 0) {
                 authenticationUtility.login(username.getText().toString(),
                         getApplicationContext(),

@@ -65,7 +65,6 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * Read from the database.
-     * TODO: Implement this method or read(String username) method.
      * USing a callback for async datastream.
      * @param username
      * @return User
@@ -148,6 +147,7 @@ public class AuthenticationUtility implements IAuthenticationUtililty {
 
     /**
      * Login utility.
+     * TODO: NodeMCU should be sent the signal here inside if(result[0]) block.
      * @param name
      * @return true if the password is valid.
      */
